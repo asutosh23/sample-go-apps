@@ -3,65 +3,67 @@ name: Test dorny/paths-filter
 on: [push, pull_request]
 
 jobs:
- filter:
-  runs-on: ubuntu-latest
-  outputs:
-    lint: ${{ steps.lint.outputs.lint }}
-    regnet: ${{ steps.regnet.outputs.regnet }}
-    test: ${{ steps.test.outputs.test }}
-  steps:
-  - name: Filter paths
-    id: filter
-    uses: dorny/paths-filter@v2
-    with:
-      filters: |
-        lint:
-          - "!*.md"
-          - "**/*.go"
-          - .github/workflows/**
-          - .golangci-legacy.yml
-          - Makefile
-          - go.mod
-          - go.sum
-          - api/proto/**/*
-          - cmd/**/*
-          - internal/**/*
-          - pkg/**/*
-        regnet:
-          - "!*.md"
-          - .github/workflows/**
-          - Makefile
-          - go.mod
-          - go.sum
-          - dev-resources/regnets/**/*
-          - internal/common/coinbox/regnet_test.go
-        test:
-          - "!*.md"
-          - "**/*.go"
-          - "**/*.sh"
-          - "**/*.sql"
-          - .github/workflows/**
-          - Makefile
-          - go.mod
-          - go.sum
+  filter:
+    runs-on: ubuntu-latest
+    outputs:
+      lint: ${{ steps.filter.outputs.lint }}
+      regnet: ${{ steps.filter.outputs.regnet }}
+      test: ${{ steps.filter.outputs.test }}
+    steps:
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          lint:
+            - "!*.md"
+            - "**/*.go"
+            - .github/workflows/**
+            - .golangci-legacy.yml
+            - Makefile
+            - go.mod
+            - go.sum
+            - api/proto/**/*
+            - cmd/**/*
+            - internal/**/*
+            - pkg/**/*
+          regnet:
+            - "!*.md"
+            - .github/workflows/**
+            - Makefile
+            - go.mod
+            - go.sum
+            - dev-resources/regnets/**/*
+            - internal/common/coinbox/regnet_test.go
+          test:
+            - "!*.md"
+            - "**/*.go"
+            - "**/*.sh"
+            - "**/*.sql"
+            - .github/workflows/**
+            - Makefile
+            - go.mod
+            - go.sum
 
- lint:
-  runs-on: ubuntu-latest
-  if: steps.filter.outputs.lint == 'true'
-  steps:
+  lint:
+    needs: filter
+    runs-on: ubuntu-latest
+    if: needs.filter.outputs.lint == 'true'
+    steps:
     - name: Run lint job
       run: echo "Lint job got triggered"
 
- regnet:
-  runs-on: ubuntu-latest
-  if: steps.filter.outputs.regnet == 'true'
-  steps:
-    - name: Run lint job
+  regnet:
+    needs: filter
+    runs-on: ubuntu-latest
+    if: needs.filter.outputs.regnet == 'true'
+    steps:
+    - name: Run regnet job
       run: echo "Regnet job got triggered"
 
- test:
-  runs-on: ubuntu-latest
-  if: steps.filter.outputs.test == 'true'
-  steps:
+  test:
+    needs: filter
+    runs-on: ubuntu-latest
+    if: needs.filter.outputs.test == 'true'
+    steps:
     - name: Run test job
       run: echo "Test job got triggered"
