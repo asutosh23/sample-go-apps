@@ -49,19 +49,19 @@ jobs:
   runs-on: ubuntu-latest
   if: steps.filter.outputs.lint == 'true'
   steps:
-  - name: Run lint job
-    run: echo "Lint job got triggered"
+    - name: Run lint job
+      run: echo "Lint job got triggered"
 
  regnet:
   runs-on: ubuntu-latest
   if: steps.filter.outputs.regnet == 'true'
   steps:
-  - name: Run regnet job
-    run: echo "Regnet job got triggered"
+    - name: Run lint job
+      run: echo "Regnet job got triggered"
 
  test:
   runs-on: ubuntu-latest
   if: steps.filter.outputs.test == 'true'
   steps:
-  - name: Run test job
-    run: echo "Test job got triggered"
+    - name: Run test job
+      run: echo "Test job got triggered"
