@@ -16,7 +16,6 @@ jobs:
       with:
         filters: |
           lint:
-            - "!*.md"
             - "**/*.go"
             - .github/workflows/**
             - .golangci-legacy.yml
@@ -28,7 +27,6 @@ jobs:
             - internal/**/*
             - pkg/**/*
           regnet:
-            - "!*.md"
             - .github/workflows/**
             - Makefile
             - go.mod
@@ -36,7 +34,6 @@ jobs:
             - dev-resources/regnets/**/*
             - internal/common/coinbox/regnet_test.go
           test:
-            - "!*.md"
             - "**/*.go"
             - "**/*.sh"
             - "**/*.sql"
