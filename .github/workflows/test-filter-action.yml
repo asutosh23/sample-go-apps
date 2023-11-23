@@ -10,6 +10,7 @@ jobs:
       regnet: ${{ steps.filter.outputs.regnet }}
       test: ${{ steps.filter.outputs.test }}
     steps:
+    - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v2
       id: filter
       with:
