@@ -1,4 +1,4 @@
-# test comment trigger in markdown file
+test change trigger in CHANGELOG.md
 
 # Go example projects
 
