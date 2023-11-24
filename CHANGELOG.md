@@ -1,4 +1,5 @@
 test change trigger in CHANGELOG.md
+test change trigger in CHANGELOG.md
 
 # Go example projects
 
